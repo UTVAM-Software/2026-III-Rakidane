@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Confirmar Eliminación{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card border-danger shadow-sm">
+            <div class="card-header bg-danger text-white">
+                <h4 class="mb-0"><i class="bi bi-exclamation-triangle me-2"></i>Eliminar Registro de Alumno</h4>
+            </div>
+            <div class="card-body text-center py-4">
+                <p class="fs-5">¿Estás seguro de que deseas eliminar permanentemente al alumno?</p>
+                <div class="alert alert-light border my-3">
+                    <strong>{{ object.nombres }} {{ object.apellido_paterno }} {{ object.apellido_materno|default:"" }}</strong><br>
+                    <small class="text-muted">Matrícula: {{ object.matricula_expediente }}</small>
+                </div>
+                <p class="text-danger small"><i class="bi bi-info-circle me-1"></i>Esta acción eliminará de la base de datos la ficha de este estudiante.</p>
+            </div>
+            <div class="card-footer bg-light d-flex justify-content-between">
+                <a href="{% url 'alumno_list' %}" class="btn btn-secondary">Cancelar</a>
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">
+                        <i class="bi bi-trash me-1"></i> Confirmar Eliminación
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalle de Sede{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0"><i class="bi bi-geo-alt-fill me-2"></i>{{ object.nombre_sede }}</h4>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-4">Institución:</dt>
+                    <dd class="col-sm-8"><strong>{{ object.id_institucion.nombre_institucion }}</strong></dd>
+
+                    <dt class="col-sm-4">Dirección Calle / No.:</dt>
+                    <dd class="col-sm-8">{{ object.direccion_calle_num|default:"No especificado" }}</dd>
+
+                    <dt class="col-sm-4">Colonia / Localidad:</dt>
+                    <dd class="col-sm-8">{{ object.colonia_localidad|default:"No especificado" }}</dd>
+
+                    <dt class="col-sm-4">Municipio / Ciudad:</dt>
+                    <dd class="col-sm-8">{{ object.municipio_ciudad|default:"No especificado" }}</dd>
+
+                    <dt class="col-sm-4">Estado / Provincia:</dt>
+                    <dd class="col-sm-8">{{ object.estado_provincia|default:"No especificado" }}</dd>
+
+                    <dt class="col-sm-4">Código Postal:</dt>
+                    <dd class="col-sm-8">{{ object.codigo_postal|default:"Sin registro" }}</dd>
+
+                    <dt class="col-sm-4">País:</dt>
+                    <dd class="col-sm-8">{{ object.pais|default:"México" }}</dd>
+
+                    <dt class="col-sm-4">Teléfono Contacto:</dt>
+                    <dd class="col-sm-8">{{ object.telefono_contacto|default:"Sin registro" }}</dd>
+
+                    <dt class="col-sm-4">Email Contacto:</dt>
+                    <dd class="col-sm-8">{{ object.email_contacto|default:"Sin registro" }}</dd>
+
+                    <dt class="col-sm-4">Coordenadas:</dt>
+                    <dd class="col-sm-8">
+                        {% if object.latitud and object.longitud %}
+                            Lat: {{ object.latitud }}, Lon: {{ object.longitud }}
+                        {% else %}
+                            Sin coordenadas registradas
+                        {% endif %}
+                    </dd>
+                </dl>
+            </div>
+            <div class="card-footer d-flex justify-content-between">
+                <a href="{% url 'sede_list' %}" class="btn btn-secondary">Regresar</a>
+                <div>
+                    <a href="{% url 'sede_update' object.pk %}" class="btn btn-warning">Editar</a>
+                    <a href="{% url 'sede_delete' object.pk %}" class="btn btn-danger">Eliminar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

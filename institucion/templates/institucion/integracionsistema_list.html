@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Integraciones de Sistema{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Integraciones de Sistemas</h2>
+    <a href="{% url 'integracionsistema_create' %}" class="btn btn-primary">+ Nueva Integración</a>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <table class="table table-striped table-hover mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>Institución</th>
+                    <th>Tipo de Sistema</th>
+                    <th>Estado de Sincronización</th>
+                    <th>Última Sincronización</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for integracion in object_list %}
+                <tr>
+                    <td><strong>{{ integracion.id_institucion.nombre_institucion }}</strong></td>
+                    <td><span class="badge bg-secondary">{{ integracion.tipo_sistema }}</span></td>
+                    <td>
+                        {% if integracion.estado_sincronizacion == 'activo' or integracion.estado_sincronizacion == 'completado' %}
+                            <span class="badge bg-success">{{ integracion.estado_sincronizacion|title }}</span>
+                        {% elif integracion.estado_sincronizacion == 'error' or integracion.estado_sincronizacion == 'fallido' %}
+                            <span class="badge bg-danger">{{ integracion.estado_sincronizacion|title }}</span>
+                        {% else %}
+                            <span class="badge bg-warning text-dark">{{ integracion.estado_sincronizacion|title }}</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ integracion.ultima_sincronizacion|date:"d/m/Y H:i"|default:"Nunca" }}</td>
+                    <td>
+                        <a href="{% url 'integracionsistema_detail' integracion.pk %}" class="btn btn-sm btn-info text-white">Ver</a>
+                        <a href="{% url 'integracionsistema_update' integracion.pk %}" class="btn btn-sm btn-warning">Editar</a>
+                        <a href="{% url 'integracionsistema_delete' integracion.pk %}" class="btn btn-sm btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center py-4 text-muted">No hay integraciones registradas aún.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

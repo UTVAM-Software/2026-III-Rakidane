@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Instituciones{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Instituciones Registradas</h2>
+    <a href="{% url 'institucion_create' %}" class="btn btn-primary">+ Nueva Institución</a>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <table class="table table-striped table-hover mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>Nombre</th>
+                    <th>CCT / RVOE</th>
+                    <th>Email Contacto</th>
+                    <th>Teléfono</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for inst in object_list %}
+                <tr>
+                    <td><strong>{{ inst.nombre_institucion }}</strong></td>
+                    <td>{{ inst.clave_cct_rvoe|default:"-" }}</td>
+                    <td>{{ inst.email_contacto|default:"-" }}</td>
+                    <td>{{ inst.telefono_contacto|default:"-" }}</td>
+                    <td>
+                        <a href="{% url 'institucion_detail' inst.pk %}" class="btn btn-sm btn-info text-white">Ver</a>
+                        <a href="{% url 'institucion_update' inst.pk %}" class="btn btn-sm btn-warning">Editar</a>
+                        <a href="{% url 'institucion_delete' inst.pk %}" class="btn btn-sm btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center py-4 text-muted">No hay instituciones registradas aún.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

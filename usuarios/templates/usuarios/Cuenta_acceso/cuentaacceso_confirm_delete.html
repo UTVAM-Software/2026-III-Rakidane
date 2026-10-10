@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Eliminar Cuenta{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card border-danger shadow-sm">
+            <div class="card-header bg-danger text-white">
+                <h4 class="mb-0"><i class="bi bi-exclamation-triangle me-2"></i>Eliminar Cuenta de Acceso</h4>
+            </div>
+            <div class="card-body text-center py-4">
+                <p class="fs-5">¿Estás seguro de que deseas eliminar esta cuenta?</p>
+                <div class="alert alert-light border my-3">
+                    <strong>{{ object.email }}</strong><br>
+                    <small class="text-muted">Rol: {{ object.id_rol.nombre_rol|default:"Sin rol" }}</small>
+                </div>
+                <p class="text-danger small mb-0"><i class="bi bi-info-circle me-1"></i>Advertencia: Si esta cuenta está asociada a un Alumno, Docente o Tutor, la eliminación puede verse bloqueada por integridad referencial.</p>
+            </div>
+            <div class="card-footer bg-light d-flex justify-content-between">
+                <a href="{% url 'cuentaacceso_list' %}" class="btn btn-secondary">Cancelar</a>
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">
+                        <i class="bi bi-trash me-1"></i> Confirmar Eliminación
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

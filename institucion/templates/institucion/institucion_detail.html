@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalle de Institución{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h4 class="mb-0">{{ object.nombre_institucion }}</h4>
+                {% if object.logo_url %}
+                <img src="{{ object.logo_url }}" alt="Logo" style="height: 40px;" class="rounded bg-white p-1">
+                {% endif %}
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-4">Clave CCT / RVOE:</dt>
+                    <dd class="col-sm-8">{{ object.clave_cct_rvoe|default:"No asignado" }}</dd>
+
+                    <dt class="col-sm-4">Razón Social:</dt>
+                    <dd class="col-sm-8">{{ object.razon_social|default:"No especificado" }}</dd>
+
+                    <dt class="col-sm-4">RFC / Identificador Fiscal:</dt>
+                    <dd class="col-sm-8">{{ object.rfc_identificador_fiscal|default:"No especificado" }}</dd>
+
+                    <dt class="col-sm-4">Dirección Fiscal:</dt>
+                    <dd class="col-sm-8">{{ object.direccion_fiscal|default:"Sin registro" }}</dd>
+
+                    <dt class="col-sm-4">Teléfono Contacto:</dt>
+                    <dd class="col-sm-8">{{ object.telefono_contacto|default:"Sin registro" }}</dd>
+
+                    <dt class="col-sm-4">Email Contacto:</dt>
+                    <dd class="col-sm-8">{{ object.email_contacto|default:"Sin registro" }}</dd>
+
+                    <dt class="col-sm-4">Sitio Web:</dt>
+                    <dd class="col-sm-8">
+                        {% if object.sitio_web %}
+                        <a href="{{ object.sitio_web }}" target="_blank">{{ object.sitio_web }}</a>
+                        {% else %}
+                        Sin registro
+                        {% endif %}
+                    </dd>
+                </dl>
+            </div>
+            <div class="card-footer d-flex justify-content-between">
+                <a href="{% url 'institucion_list' %}" class="btn btn-secondary">Regresar</a>
+                <div>
+                    <a href="{% url 'institucion_update' object.pk %}" class="btn btn-warning">Editar</a>
+                    <a href="{% url 'institucion_delete' object.pk %}" class="btn btn-danger">Eliminar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

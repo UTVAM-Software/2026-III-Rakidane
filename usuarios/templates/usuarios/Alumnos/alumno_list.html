@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Lista de Alumnos{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-mortarboard me-2"></i>Lista de Alumnos</h2>
+    <a href="{% url 'alumno_create' %}" class="btn btn-primary">
+        <i class="bi bi-plus-lg me-1"></i> Registrar Alumno
+    </a>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Matrícula</th>
+                        <th>Nombre Completo</th>
+                        <th>Cuenta/Email</th>
+                        <th>Estado</th>
+                        <th>Sede</th>
+                        <th class="text-end">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for alumno in alumnos %}
+                    <tr>
+                        <td><code>{{ alumno.matricula_expediente }}</code></td>
+                        <td class="fw-bold">{{ alumno.nombres }} {{ alumno.apellido_paterno }} {{ alumno.apellido_materno|default:"" }}</td>
+                        <td>{{ alumno.id_cuenta.email }}</td>
+                        <td>
+                            {% if alumno.id_estado_matricula %}
+                                <span class="badge bg-info text-dark">{{ alumno.id_estado_matricula.nombre_estado }}</span>
+                            {% else %}
+                                <span class="badge bg-secondary">Sin estado</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ alumno.id_sede|default:"Sin Sede" }}</td>
+                        <td class="text-end">
+                            <a href="{% url 'alumno_detail' alumno.pk %}" class="btn btn-sm btn-outline-info me-1" title="Ver Detalle">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                            <a href="{% url 'alumno_update' alumno.pk %}" class="btn btn-sm btn-outline-warning me-1" title="Editar">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <a href="{% url 'alumno_delete' alumno.pk %}" class="btn btn-sm btn-outline-danger" title="Eliminar">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center py-4 text-muted">
+                            <i class="bi bi-inbox fs-3 d-block mb-2"></i> No hay alumnos registrados.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
