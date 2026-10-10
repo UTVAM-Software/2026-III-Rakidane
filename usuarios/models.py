@@ -57,7 +57,7 @@ class CuentaAcceso(models.Model):
 
 class Docente(models.Model):
     id_docente = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    id_cuenta = models.OneToOneField(CuentaAcceso, on_delete=models.CASCADE, db_column='id_cuenta')
+    id_cuenta = models.OneToOneField(CuentaAcceso, on_delete=models.SET_NULL, db_column='id_cuenta', null=True, blank=True)
     nombres = models.CharField(max_length=100)
     apellido_paterno = models.CharField(max_length=100)
     apellido_materno = models.CharField(max_length=100, blank=True, null=True)
@@ -80,7 +80,7 @@ class Docente(models.Model):
 
 class Alumno(models.Model):
     id_alumno = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    id_cuenta = models.OneToOneField(CuentaAcceso, on_delete=models.CASCADE, db_column='id_cuenta')
+    id_cuenta = models.OneToOneField(CuentaAcceso, on_delete=models.SET_NULL, db_column='id_cuenta', null=True, blank=True)
     id_sede = models.ForeignKey('institucion.Sede', on_delete=models.SET_NULL, null=True, blank=True, db_column='id_sede')
     id_estado_matricula = models.ForeignKey(EstadoMatricula, on_delete=models.PROTECT, db_column='id_estado_matricula', null=True, blank=True)
     nombres = models.CharField(max_length=100)
@@ -104,7 +104,7 @@ class Alumno(models.Model):
 
 class TutorPadre(models.Model):
     id_tutor = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    id_cuenta = models.OneToOneField(CuentaAcceso, on_delete=models.CASCADE, db_column='id_cuenta')
+    id_cuenta = models.OneToOneField(CuentaAcceso, on_delete=models.SET_NULL, db_column='id_cuenta', null=True, blank=True)
     id_parentesco = models.ForeignKey(ParentescoTutor, on_delete=models.PROTECT, db_column='id_parentesco', null=True, blank=True)
     nombres = models.CharField(max_length=100)
     apellido_paterno = models.CharField(max_length=100)

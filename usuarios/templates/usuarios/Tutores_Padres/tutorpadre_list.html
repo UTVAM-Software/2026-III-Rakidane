@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Lista de Tutores y Padres{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-people me-2"></i>Gestión de Tutores y Padres</h2>
+    <a href="{% url 'tutorpadre_create' %}" class="btn btn-primary">
+        <i class="bi bi-plus-lg me-1"></i> Registrar Tutor
+    </a>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Nombre Completo</th>
+                        <th>Teléfono Principal</th>
+                        <th>Correo de Acceso</th>
+                        <th>Ocupación</th>
+                        <th>Estatus</th>
+                        <th class="text-end">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tutor in tutores %}
+                    <tr>
+                        <td class="fw-bold">{{ tutor.nombres }} {{ tutor.primer_apellido }} {{ tutor.segundo_apellido|default:"" }}</td>
+                        <td>{{ tutor.telefono_principal|default:tutor.telefono|default:"Sin teléfono" }}</td>
+                        <td>{{ tutor.id_cuenta.email|default:"Sin cuenta" }}</td>
+                        <td><span class="badge bg-secondary">{{ tutor.ocupacion|default:"No especificada" }}</span></td>
+                        <td>
+                            {% if tutor.esta_activo %}
+                                <span class="badge bg-success">Activo</span>
+                            {% else %}
+                                <span class="badge bg-danger">Inactivo</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-end">
+                            <a href="{% url 'tutorpadre_detail' tutor.pk %}" class="btn btn-sm btn-outline-info me-1" title="Ver Detalle">
+                                <i class="bi bi-eye"></i>
+                            </a>
+                            <a href="{% url 'tutorpadre_update' tutor.pk %}" class="btn btn-sm btn-outline-warning me-1" title="Editar">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <a href="{% url 'tutorpadre_delete' tutor.pk %}" class="btn btn-sm btn-outline-danger" title="Eliminar">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center py-4 text-muted">
+                            <i class="bi bi-inbox fs-3 d-block mb-2"></i> No hay tutores registrados.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

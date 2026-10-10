@@ -8,27 +8,29 @@ from .models import (
 # --- ROL CUENTA ---
 class RolCuentaListView(ListView):
     model = RolCuenta
-    template_name = 'usuarios/rolcuenta_list.html'
+    template_name = 'usuarios/Roles/rolcuenta_list.html'
+    context_object_name = 'roles'
 
 class RolCuentaDetailView(DetailView):
     model = RolCuenta
-    template_name = 'usuarios/rolcuenta_detail.html'
+    template_name = 'usuarios/Roles/rolcuenta_detail.html'
+    context_object_name = 'rol'
 
 class RolCuentaCreateView(CreateView):
     model = RolCuenta
     fields = ['nombre_rol', 'descripcion']
-    template_name = 'usuarios/nuevo_rolcuenta.html'
+    template_name = 'usuarios/Roles/nuevo_rolcuenta.html'
     success_url = '/usuarios/roles/'
 
 class RolCuentaUpdateView(UpdateView):
     model = RolCuenta
     fields = ['nombre_rol', 'descripcion']
-    template_name = 'usuarios/editar_rolcuenta.html'
+    template_name = 'usuarios/Roles/editar_rolcuenta.html'
     success_url = '/usuarios/roles/'
 
 class RolCuentaDeleteView(DeleteView):
     model = RolCuenta
-    template_name = 'usuarios/rolcuenta_confirm_delete.html'
+    template_name = 'usuarios/Roles/rolcuenta_confirm_delete.html'
     success_url = '/usuarios/roles/'
 
 

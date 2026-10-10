@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Detalle del Rol{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0"><i class="bi bi-shield-check me-2"></i>Detalle de Rol</h4>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="text-muted small d-block">Nombre del Rol</label>
+                    <strong>{{ rol.nombre_rol }}</strong>
+                </div>
+                <div class="mb-3">
+                    <label class="text-muted small d-block">Descripción</label>
+                    <p class="mb-0">{{ rol.descripcion|default:"Sin descripción" }}</p>
+                </div>
+                <div class="mb-3">
+                    <label class="text-muted small d-block">ID Único (UUID)</label>
+                    <small class="text-monospace text-muted">{{ rol.id_rol }}</small>
+                </div>
+            </div>
+            <div class="card-footer bg-light d-flex justify-content-between">
+                <a href="{% url 'rol_list' %}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left me-1"></i> Volver a la Lista
+                </a>
+                <div>
+                    <a href="{% url 'rol_update' rol.pk %}" class="btn btn-warning me-1">
+                        <i class="bi bi-pencil me-1"></i> Editar
+                    </a>
+                    <a href="{% url 'rol_delete' rol.pk %}" class="btn btn-danger">
+                        <i class="bi bi-trash me-1"></i> Eliminar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

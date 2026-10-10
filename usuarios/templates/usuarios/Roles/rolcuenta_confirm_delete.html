@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}Eliminar Rol{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card border-danger shadow-sm">
+            <div class="card-header bg-danger text-white">
+                <h4 class="mb-0"><i class="bi bi-exclamation-triangle me-2"></i>Eliminar Rol</h4>
+            </div>
+            <div class="card-body text-center py-4">
+                <p class="fs-5">¿Estás seguro de que deseas eliminar este rol?</p>
+                <div class="alert alert-light border my-3">
+                    <strong>{{ object.nombre_rol }}</strong><br>
+                    <small class="text-muted">{{ object.descripcion|default:"Sin descripción" }}</small>
+                </div>
+                <p class="text-danger small mb-0"><i class="bi bi-info-circle me-1"></i>Atención: No podrás eliminar este rol si existen cuentas de usuario vinculadas a él.</p>
+            </div>
+            <div class="card-footer bg-light d-flex justify-content-between">
+                <a href="{% url 'rol_list' %}" class="btn btn-secondary">Cancelar</a>
+                <form method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">
+                        <i class="bi bi-trash me-1"></i> Confirmar Eliminación
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
