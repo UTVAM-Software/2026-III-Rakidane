@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %}Panel Principal - Sistema General{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="d-flex align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-0"><i class="bi bi-grid-fill me-2 text-primary"></i>Panel General de Aplicaciones</h2>
+            <p class="text-muted mb-0">Gestión integral de los módulos de la plataforma</p>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- APP 1: USUARIOS -->
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 border-top border-primary border-4">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-primary bg-opacity-10 p-3 rounded me-3 text-primary">
+                            <i class="bi bi-people-fill fs-3"></i>
+                        </div>
+                        <h5 class="card-title mb-0 fw-bold">Módulo Usuarios</h5>
+                    </div>
+                    <p class="card-text text-muted small">Gestión de Alumnos, Docentes, Tutores, Cuentas de Acceso y Roles del sistema.</p>
+                    <div class="list-group list-group-flush small">
+                        <a href="{% url 'alumno_list' %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Alumnos <i class="bi bi-chevron-right text-muted"></i></a>
+                        <a href="{% url 'docente_list' %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Docentes <i class="bi bi-chevron-right text-muted"></i></a>
+                        <a href="{% url 'tutorpadre_list' %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Tutores y Padres <i class="bi bi-chevron-right text-muted"></i></a>
+                        <a href="{% url 'rol_list' %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Roles y Permisos <i class="bi bi-chevron-right text-muted"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- APP 2: INSTITUCIÓN -->
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 border-top border-success border-4">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-success bg-opacity-10 p-3 rounded me-3 text-success">
+                            <i class="bi bi-building-fill fs-3"></i>
+                        </div>
+                        <h5 class="card-title mb-0 fw-bold">Módulo Institución</h5>
+                    </div>
+                    <p class="card-text text-muted small">Estructura organizacional, planteles, sedes y parámetros institucionales.</p>
+                    <div class="list-group list-group-flush small">
+                        <a href="/institucion/instituciones/" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Instituciones <i class="bi bi-chevron-right text-muted"></i></a>
+                        <a href="/institucion/sedes/" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Sedes / Planteles <i class="bi bi-chevron-right text-muted"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- APP 3: ACADEMIA -->
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 border-top border-warning border-4">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-warning bg-opacity-10 p-3 rounded me-3 text-warning">
+                            <i class="bi bi-journal-bookmark-fill fs-3"></i>
+                        </div>
+                        <h5 class="card-title mb-0 fw-bold">Módulo Academia</h5>
+                    </div>
+                    <p class="card-text text-muted small">Planes de estudio, asignaturas, materias, grupos y períodos escolares.</p>
+                    <div class="list-group list-group-flush small">
+                        <a href="/academia/planes_estudio/" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Planes de Estudio <i class="bi bi-chevron-right text-muted"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- APP 4: EVALUACIÓN -->
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 border-top border-danger border-4">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-danger bg-opacity-10 p-3 rounded me-3 text-danger">
+                            <i class="bi bi-clipboard-data-fill fs-3"></i>
+                        </div>
+                        <h5 class="card-title mb-0 fw-bold">Módulo Evaluación</h5>
+                    </div>
+                    <p class="card-text text-muted small">Calificaciones, exenciones, parciales, récords académicos y evaluaciones.</p>
+                    <div class="list-group list-group-flush small">
+                        <a href="/evaluacion/" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Evaluaciones y Notas <i class="bi bi-chevron-right text-muted"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- APP 5: COMUNICACIÓN -->
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0 border-top border-info border-4">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-info bg-opacity-10 p-3 rounded me-3 text-info">
+                            <i class="bi bi-chat-dots-fill fs-3"></i>
+                        </div>
+                        <h5 class="card-title mb-0 fw-bold">Módulo Comunicación</h5>
+                    </div>
+                    <p class="card-text text-muted small">Avisos, notificaciones institucionales y mensajería a tutores/alumnos.</p>
+                    <div class="list-group list-group-flush small">
+                        <a href="/comunicacion/" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Avisos y Boletines <i class="bi bi-chevron-right text-muted"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
