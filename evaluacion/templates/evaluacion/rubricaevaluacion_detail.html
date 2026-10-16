@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalle de Rúbrica{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">{{ object.nombre_rubrica }}</h4>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-4">Lección Asociada:</dt>
+                    <dd class="col-sm-8">{{ object.id_leccion|default:"Sin asignar" }}</dd>
+
+                    <dt class="col-sm-4">Descripción General:</dt>
+                    <dd class="col-sm-8">{{ object.descripcion_general|default:"Sin descripción" }}</dd>
+                </dl>
+            </div>
+            <div class="card-footer d-flex justify-content-between">
+                <a href="{% url 'rubricaevaluacion_list' %}" class="btn btn-secondary">Regresar</a>
+                <div>
+                    <a href="{% url 'rubricaevaluacion_update' object.pk %}" class="btn btn-warning">Editar</a>
+                    <a href="{% url 'rubricaevaluacion_delete' object.pk %}" class="btn btn-danger">Eliminar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
