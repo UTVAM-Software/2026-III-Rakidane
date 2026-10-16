@@ -12,6 +12,9 @@ from .views import (
 )
 
 urlpatterns = [
+    # Ruta principal para /evaluacion/
+    path('', RubricaEvaluacionListView.as_view(), name='evaluacion_index'),
+
     # Catálogos
     path('estados-entrega/', EstadoEntregaListView.as_view(), name='estadoentrega_list'),
     path('estados-revision/', EstadoRevisionListView.as_view(), name='estadorevision_list'),
