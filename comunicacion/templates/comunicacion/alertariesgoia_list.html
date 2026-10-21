@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block title %}Alertas de Riesgo IA{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-0 text-primary">Alertas de Riesgo (IA)</h2>
+            <p class="text-muted mb-0">Detección temprana de deserción o bajo rendimiento mediante IA</p>
+        </div>
+        <a href="{% url 'alertariesgoia_create' %}" class="btn btn-primary shadow-sm">
+            <i class="bi bi-shield-exclamation me-1"></i> Nueva Alerta
+        </a>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-3">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col" class="ps-4">Alumno</th>
+                            <th scope="col" class="text-center">Nivel de Riesgo</th>
+                            <th scope="col" class="text-center">Estado Validación</th>
+                            <th scope="col">Motivo de Alerta</th>
+                            <th scope="col">Fecha Detectado</th>
+                            <th scope="col" class="text-end pe-4">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for alerta in object_list %}
+                        <tr>
+                            <td class="ps-4 fw-semibold text-dark">{{ alerta.id_alumno }}</td>
+                            <td class="text-center">
+                                {% if alerta.id_nivel_riesgo %}
+                                    <span class="badge rounded-pill px-3 py-2 text-white" style="background-color: {{ alerta.id_nivel_riesgo.codigo_color_hex|default:'#dc3545' }};">
+                                        {{ alerta.id_nivel_riesgo.nombre_nivel }}
+                                    </span>
+                                {% else %}
+                                    <span class="badge bg-secondary">Sin Definir</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-center">
+                                <span class="badge bg-light text-dark border">
+                                    {{ alerta.id_estado_validacion.nombre_estado|default:"Pendiente" }}
+                                </span>
+                            </td>
+                            <td class="text-muted small text-truncate" style="max-width: 250px;">
+                                {{ alerta.motivo_alerta }}
+                            </td>
+                            <td><small class="text-muted"><i class="bi bi-clock me-1"></i>{{ alerta.creado_en|date:"d/m/Y H:i" }}</small></td>
+                            <td class="text-end pe-4">
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <a href="{% url 'alertariesgoia_detail' alerta.pk %}" class="btn btn-outline-info" title="Ver detalle">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                    <a href="{% url 'alertariesgoia_update' alerta.pk %}" class="btn btn-outline-warning" title="Editar">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <a href="{% url 'alertariesgoia_delete' alerta.pk %}" class="btn btn-outline-danger" title="Eliminar">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center py-5 text-muted">
+                                <i class="bi bi-shield-check display-5 d-block mb-2 text-success"></i>
+                                No hay alertas de riesgo registradas actualmente.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

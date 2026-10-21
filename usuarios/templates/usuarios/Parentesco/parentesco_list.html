@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Catálogo: Parentescos{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-3">
+    <!-- ENCABEZADO CON BOTÓN NUEVO -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold text-primary mb-1">Catálogo: Parentescos</h2>
+            <p class="text-muted small mb-0">Relaciones de parentesco entre tutores/padres y alumnos</p>
+        </div>
+        <a href="{% url 'parentescomodel_create' %}" class="btn btn-primary fw-bold px-3 shadow-sm">
+            <i class="bi bi-plus-lg me-1"></i> Nuevo Parentesco
+        </a>
+    </div>
+
+    <!-- TABLA DE LISTADO -->
+    <div class="card border-0 shadow-sm rounded-3">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4">Tipo de Parentesco</th>
+                            <th class="text-end pe-4">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for parentesco in object_list %}
+                        <tr>
+                            <td class="ps-4 fw-semibold text-dark">{{ parentesco.nombre_parentesco }}</td>
+                            <td class="text-end pe-4">
+                                <a href="{% url 'parentescomodel_detail' parentesco.pk %}" class="btn btn-sm btn-outline-info me-1" title="Ver detalles">
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                <a href="{% url 'parentescomodel_update' parentesco.pk %}" class="btn btn-sm btn-outline-warning me-1" title="Editar">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <a href="{% url 'parentescomodel_delete' parentesco.pk %}" class="btn btn-sm btn-outline-danger" title="Eliminar">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="2" class="text-center py-4 text-muted">
+                                No hay tipos de parentesco registrados.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

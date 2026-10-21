@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalle de Criterio Evaluado{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-3">
+                <div class="card-header bg-primary text-white py-3 rounded-top d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0 fw-bold"><i class="bi bi-check2-circle me-2"></i>Puntuación de Criterio</h4>
+                    <span class="badge bg-light text-primary fs-6">{{ object.puntaje_criterio }} Puntos</span>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label text-muted small fw-bold">EVALUACIÓN IA BORRADOR</label>
+                            <p class="fs-6 fw-bold text-dark"><i class="bi bi-robot me-1 text-primary"></i>{{ object.id_eval_ia }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label text-muted small fw-bold">CRITERIO EVALUADO</label>
+                            <p class="fs-5 text-dark"><i class="bi bi-list-task me-1 text-primary"></i>{{ object.id_criterio.nombre_criterio }}</p>
+                        </div>
+                        <div class="col-12">
+                            <hr class="text-muted opacity-25">
+                            <label class="form-label text-muted small fw-bold">EVIDENCIA CITADA POR LA IA</label>
+                            <div class="bg-light p-3 rounded text-dark border-start border-info border-4">
+                                {{ object.evidencia_citada|default:"No se registraron citas ni evidencias específicas."|linebreaks }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-light py-3 d-flex justify-content-between">
+                    <a href="{% url 'evaluacioncriteriodetalle_list' %}" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left me-1"></i> Regresar
+                    </a>
+                    <div>
+                        <a href="{% url 'evaluacioncriteriodetalle_update' object.pk %}" class="btn btn-warning me-2">
+                            <i class="bi bi-pencil me-1"></i> Editar
+                        </a>
+                        <a href="{% url 'evaluacioncriteriodetalle_delete' object.pk %}" class="btn btn-danger">
+                            <i class="bi bi-trash me-1"></i> Eliminar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

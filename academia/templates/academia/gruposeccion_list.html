@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}Grupos y Secciones{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-0 text-primary">Grupos y Secciones</h2>
+            <p class="text-muted mb-0">Gestión de grupos escolares y docentes titulares asignados</p>
+        </div>
+        <a href="{% url 'gruposeccion_create' %}" class="btn btn-primary shadow-sm">
+            <i class="bi bi-plus-lg me-1"></i> Nuevo Grupo
+        </a>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-3">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col" class="ps-4">Nombre del Grupo</th>
+                            <th scope="col">Grado / Semestre</th>
+                            <th scope="col">Ciclo Escolar</th>
+                            <th scope="col">Capacidad</th>
+                            <th scope="col">Sede</th>
+                            <th scope="col" class="text-end pe-4">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for grupo in object_list %}
+                        <tr>
+                            <td class="ps-4 fw-semibold text-dark">{{ grupo.nombre_grupo }}</td>
+                            <td><span class="badge bg-info text-dark">{{ grupo.grado_semestre|default:"N/A" }}</span></td>
+                            <td>{{ grupo.ciclo_escolar }}</td>
+                            <td><i class="bi bi-people me-1 text-muted"></i>{{ grupo.capacidad_maxima }} alumnos</td>
+                            <td>{{ grupo.id_sede.nombre_sede|default:"Sin Sede" }}</td>
+                            <td class="text-end pe-4">
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <a href="{% url 'gruposeccion_detail' grupo.pk %}" class="btn btn-outline-info" title="Ver detalle">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                    <a href="{% url 'gruposeccion_update' grupo.pk %}" class="btn btn-outline-warning" title="Editar">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <a href="{% url 'gruposeccion_delete' grupo.pk %}" class="btn btn-outline-danger" title="Eliminar">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center py-5 text-muted">
+                                <i class="bi bi-people-fill display-5 d-block mb-2"></i>
+                                No hay grupos ni secciones registrados actualmente.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

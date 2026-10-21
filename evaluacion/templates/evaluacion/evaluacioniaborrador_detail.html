@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalle de Evaluación IA{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+            <div class="card border-0 shadow-sm rounded-3">
+                <div class="card-header bg-dark text-white py-3 rounded-top d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0 fw-bold"><i class="bi bi-robot me-2"></i>Evaluación IA - {{ object.modelo_ia_utilizado }}</h4>
+                    <span class="badge bg-primary fs-6">Confianza: {{ object.porcentaje_confianza|default:"0" }}%</span>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label text-muted small fw-bold">ENTREGA DEL ALUMNO</label>
+                            <p class="fs-5 fw-bold text-dark"><i class="bi bi-person me-1 text-primary"></i>{{ object.id_entrega.id_alumno }}</p>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <div class="p-3 bg-light rounded">
+                                <label class="form-label text-muted small fw-bold d-block">PUNTAJE IA</label>
+                                <span class="fs-4 fw-bold text-info">{{ object.puntaje_sugerido|default:"N/A" }}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <div class="p-3 bg-light rounded">
+                                <label class="form-label text-muted small fw-bold d-block">NOTA DOCENTE</label>
+                                <span class="fs-4 fw-bold text-success">{{ object.puntaje_final_docente|default:"N/A" }}</span>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <hr class="text-muted opacity-25">
+                            <label class="form-label text-muted small fw-bold">COMENTARIO GENERAL / RETROALIMENTACIÓN IA</label>
+                            <div class="bg-light p-3 rounded text-dark">
+                                {{ object.comentario_general|default:"Sin comentarios generados."|linebreaks }}
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <label class="form-label text-muted small fw-bold">PROMPT UTILIZADO</label>
+                            <div class="bg-light p-3 rounded text-muted font-monospace small">
+                                {{ object.prompt_utilizado|default:"No registrado." }}
+                            </div>
+                        </div>
+
+                        {% if object.datos_origen_json %}
+                        <div class="col-12">
+                            <label class="form-label text-muted small fw-bold">AUDITORÍA: CONTEXTO JSON ENVIADO AL LLM</label>
+                            <pre class="bg-dark text-light p-3 rounded font-monospace small" style="max-height: 200px; overflow-y: auto;"><code>{{ object.datos_origen_json }}</code></pre>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-footer bg-light py-3 d-flex justify-content-between">
+                    <a href="{% url 'evaluacioniaborrador_list' %}" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left me-1"></i> Regresar
+                    </a>
+                    <div>
+                        <a href="{% url 'evaluacioniaborrador_update' object.pk %}" class="btn btn-warning me-2">
+                            <i class="bi bi-pencil me-1"></i> Auditar / Modificar
+                        </a>
+                        <a href="{% url 'evaluacioniaborrador_delete' object.pk %}" class="btn btn-danger">
+                            <i class="bi bi-trash me-1"></i> Eliminar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

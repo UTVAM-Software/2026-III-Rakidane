@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %}Evaluaciones IA (Borrador){% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-0 text-primary">Evaluaciones Automatizadas (IA)</h2>
+            <p class="text-muted mb-0">Pre-evaluaciones generadas por IA y auditoría de revisiones docentes</p>
+        </div>
+        <a href="{% url 'evaluacioniaborrador_create' %}" class="btn btn-primary shadow-sm">
+            <i class="bi bi-robot me-1"></i> Nueva Evaluación IA
+        </a>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-3">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col" class="ps-4">Entrega / Alumno</th>
+                            <th scope="col">Modelo IA</th>
+                            <th scope="col" class="text-center">Puntaje Sugerido</th>
+                            <th scope="col" class="text-center">Confianza</th>
+                            <th scope="col" class="text-center">Modificado por Docente</th>
+                            <th scope="col" class="text-center">Nota Final Docente</th>
+                            <th scope="col" class="text-end pe-4">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for eval in object_list %}
+                        <tr>
+                            <td class="ps-4 fw-semibold text-dark">{{ eval.id_entrega.id_alumno }}</td>
+                            <td><span class="badge bg-dark font-monospace">{{ eval.modelo_ia_utilizado }}</span></td>
+                            <td class="text-center fw-bold text-info">{{ eval.puntaje_sugerido|default:"-" }} pts</td>
+                            <td class="text-center">
+                                {% if eval.porcentaje_confianza %}
+                                    <span class="badge bg-light text-dark border">{{ eval.porcentaje_confianza }}%</span>
+                                {% else %}
+                                    -
+                                {% endif %}
+                            </td>
+                            <td class="text-center">
+                                {% if eval.fue_modificado_por_docente %}
+                                    <span class="badge bg-warning text-dark"><i class="bi bi-pencil-fill me-1"></i>Sí</span>
+                                {% else %}
+                                    <span class="badge bg-success"><i class="bi bi-check-circle me-1"></i>Sin cambios</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-center fw-bold text-success fs-6">
+                                {{ eval.puntaje_final_docente|default:"-" }}
+                            </td>
+                            <td class="text-end pe-4">
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <a href="{% url 'evaluacioniaborrador_detail' eval.pk %}" class="btn btn-outline-info" title="Ver detalle">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                    <a href="{% url 'evaluacioniaborrador_update' eval.pk %}" class="btn btn-outline-warning" title="Editar">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <a href="{% url 'evaluacioniaborrador_delete' eval.pk %}" class="btn btn-outline-danger" title="Eliminar">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="7" class="text-center py-5 text-muted">
+                                <i class="bi bi-robot display-5 d-block mb-2"></i>
+                                No hay borramientos de evaluación IA registrados actualmente.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

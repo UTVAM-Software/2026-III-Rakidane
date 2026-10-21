@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Estados de Asistencia{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-0 text-primary">Catálogo: Estados de Asistencia</h2>
+            <p class="text-muted mb-0">Presente, Falta, Retardo, Justificado</p>
+        </div>
+        <a href="{% url 'estadoasistencia_create' %}" class="btn btn-primary shadow-sm">
+            <i class="bi bi-plus-lg me-1"></i> Nuevo Estado
+        </a>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-3">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col" class="ps-4">Nombre del Estado</th>
+                            <th scope="col" class="text-end pe-4">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for est in object_list %}
+                        <tr>
+                            <td class="ps-4 fw-semibold text-dark">{{ est.nombre_estado }}</td>
+                            <td class="text-end pe-4">
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <a href="{% url 'estadoasistencia_detail' est.pk %}" class="btn btn-outline-info"><i class="bi bi-eye"></i></a>
+                                    <a href="{% url 'estadoasistencia_update' est.pk %}" class="btn btn-outline-warning"><i class="bi bi-pencil"></i></a>
+                                    <a href="{% url 'estadoasistencia_delete' est.pk %}" class="btn btn-outline-danger"><i class="bi bi-trash"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="2" class="text-center py-5 text-muted">No hay estados de asistencia registrados.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

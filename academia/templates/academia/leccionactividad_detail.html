@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalle de la Lección / Actividad{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-3">
+                <div class="card-header bg-primary text-white py-3 rounded-top d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0 fw-bold"><i class="bi bi-journal-text me-2"></i>{{ object.titulo }}</h4>
+                    <span class="badge bg-light text-dark font-monospace fs-6">
+                        {{ object.id_tipo_actividad.nombre_tipo|default:"Actividad" }}
+                    </span>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label text-muted small fw-bold">UNIDAD ACADÉMICA</label>
+                            <p class="fs-5 text-dark"><i class="bi bi-layers me-1 text-primary"></i>{{ object.id_unidad.titulo_unidad }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label text-muted small fw-bold">PUNTAJE MÁXIMO</label>
+                            <p class="fs-5 fw-bold text-success"><i class="bi bi-award me-1"></i>{{ object.puntaje_maximo }} Puntos</p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label text-muted small fw-bold">FECHA Y HORA DE APERTURA</label>
+                            <p class="fs-6 text-dark"><i class="bi bi-calendar-event me-1 text-primary"></i>{{ object.fecha_apertura|date:"d/m/Y - H:i"|default:"Sin fecha especificada" }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label text-muted small fw-bold">FECHA Y HORA LÍMITE</label>
+                            <p class="fs-6 text-danger"><i class="bi bi-clock-history me-1"></i>{{ object.fecha_limite|date:"d/m/Y - H:i"|default:"Sin límite de entrega" }}</p>
+                        </div>
+                        <div class="col-12">
+                            <hr class="text-muted opacity-25">
+                            <label class="form-label text-muted small fw-bold">INSTRUCCIONES / DESCRIPCIÓN</label>
+                            <div class="bg-light p-3 rounded text-dark">
+                                {{ object.descripcion_instrucciones|default:"No hay instrucciones específicas para esta lección."|linebreaks }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-light py-3 d-flex justify-content-between">
+                    <a href="{% url 'leccionactividad_list' %}" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left me-1"></i> Regresar a la lista
+                    </a>
+                    <div>
+                        <a href="{% url 'leccionactividad_update' object.pk %}" class="btn btn-warning me-2">
+                            <i class="bi bi-pencil me-1"></i> Editar
+                        </a>
+                        <a href="{% url 'leccionactividad_delete' object.pk %}" class="btn btn-danger">
+                            <i class="bi bi-trash me-1"></i> Eliminar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

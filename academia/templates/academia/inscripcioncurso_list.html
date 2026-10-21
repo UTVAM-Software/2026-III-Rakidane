@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}Inscripciones a Cursos{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-0 text-primary">Inscripciones a Cursos</h2>
+            <p class="text-muted mb-0">Gestión de alumnos inscritos en materias y seguimiento de avance</p>
+        </div>
+        <a href="{% url 'inscripcioncurso_create' %}" class="btn btn-primary shadow-sm">
+            <i class="bi bi-plus-lg me-1"></i> Nueva Inscripción
+        </a>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-3">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col" class="ps-4">Alumno</th>
+                            <th scope="col">Materia / Curso</th>
+                            <th scope="col">Fecha Inscripción</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Progreso</th>
+                            <th scope="col" class="text-end pe-4">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for inscripcion in object_list %}
+                        <tr>
+                            <td class="ps-4 fw-semibold text-dark">{{ inscripcion.id_alumno }}</td>
+                            <td><span class="badge bg-light text-dark border">{{ inscripcion.id_curso.nombre_materia }}</span></td>
+                            <td><i class="bi bi-calendar-event me-1 text-muted"></i>{{ inscripcion.fecha_inscripcion|date:"d/m/Y H:i" }}</td>
+                            <td>
+                                <span class="badge bg-info text-dark">
+                                    {{ inscripcion.id_estado_inscripcion.nombre_estado|default:"En Cursamiento" }}
+                                </span>
+                            </td>
+                            <td style="width: 150px;">
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="progress flex-grow-1" style="height: 8px;">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: {{ inscripcion.progreso_porcentaje }}%;" aria-valuenow="{{ inscripcion.progreso_porcentaje }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <small class="fw-bold text-muted">{{ inscripcion.progreso_porcentaje }}%</small>
+                                </div>
+                            </td>
+                            <td class="text-end pe-4">
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <a href="{% url 'inscripcioncurso_detail' inscripcion.pk %}" class="btn btn-outline-info" title="Ver detalle">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                    <a href="{% url 'inscripcioncurso_update' inscripcion.pk %}" class="btn btn-outline-warning" title="Editar">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <a href="{% url 'inscripcioncurso_delete' inscripcion.pk %}" class="btn btn-outline-danger" title="Eliminar">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center py-5 text-muted">
+                                <i class="bi bi-person-check display-5 d-block mb-2"></i>
+                                No hay inscripciones registradas actualmente.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

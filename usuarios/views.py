@@ -37,54 +37,54 @@ class RolCuentaDeleteView(DeleteView):
 # --- ESTADO MATRICULA ---
 class EstadoMatriculaListView(ListView):
     model = EstadoMatricula
-    template_name = 'usuarios/estadomatricula_list.html'
+    template_name = 'usuarios/Estado_matricula/estadomatricula_list.html'
 
 class EstadoMatriculaDetailView(DetailView):
     model = EstadoMatricula
-    template_name = 'usuarios/estadomatricula_detail.html'
+    template_name = 'usuarios/Estado_matricula/estadomatricula_detail.html'
 
 class EstadoMatriculaCreateView(CreateView):
     model = EstadoMatricula
     fields = ['nombre_estado', 'descripcion']
-    template_name = 'usuarios/nuevo_estadomatricula.html'
-    success_url = '/usuarios/estados_matricula/'
+    template_name = 'usuarios/Estado_matricula/nuevo_estadomatricula.html'
+    success_url = '/usuarios/estados-matricula/'
 
 class EstadoMatriculaUpdateView(UpdateView):
     model = EstadoMatricula
     fields = ['nombre_estado', 'descripcion']
-    template_name = 'usuarios/editar_estadomatricula.html'
-    success_url = '/usuarios/estados_matricula/'
+    template_name = 'usuarios/Estado_matricula/editar_estadomatricula.html'
+    success_url = '/usuarios/estados-matricula/'
 
 class EstadoMatriculaDeleteView(DeleteView):
     model = EstadoMatricula
-    template_name = 'usuarios/estadomatricula_confirm_delete.html'
-    success_url = '/usuarios/estados_matricula/'
+    template_name = 'usuarios/Estado_matricula/estadomatricula_confirm_delete.html'
+    success_url = '/usuarios/estados-matricula/'
 
 
 # --- PARENTESCO TUTOR ---
 class ParentescoTutorListView(ListView):
     model = ParentescoTutor
-    template_name = 'usuarios/parentesco_list.html'
+    template_name = 'usuarios/Parentesco/parentesco_list.html'
 
 class ParentescoTutorDetailView(DetailView):
     model = ParentescoTutor
-    template_name = 'usuarios/parentesco_detail.html'
+    template_name = 'usuarios/Parentesco/parentesco_detail.html'
 
 class ParentescoTutorCreateView(CreateView):
     model = ParentescoTutor
     fields = ['nombre_parentesco']
-    template_name = 'usuarios/nuevo_parentesco.html'
+    template_name = 'usuarios/Parentesco/nuevo_parentesco.html'
     success_url = '/usuarios/parentescos/'
 
 class ParentescoTutorUpdateView(UpdateView):
     model = ParentescoTutor
     fields = ['nombre_parentesco']
-    template_name = 'usuarios/editar_parentesco.html'
+    template_name = 'usuarios/Parentesco/editar_parentesco.html'
     success_url = '/usuarios/parentescos/'
 
 class ParentescoTutorDeleteView(DeleteView):
     model = ParentescoTutor
-    template_name = 'usuarios/parentesco_confirm_delete.html'
+    template_name = 'usuarios/Parentesco/parentesco_confirm_delete.html'
     success_url = '/usuarios/parentescos/'
 
 

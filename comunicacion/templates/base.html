@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Módulo de Comunicación - Rakidane{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-0">
+    <!-- SUB-CABECERA DEL MÓDULO DE COMUNICACIÓN -->
+    <div class="bg-white border-bottom py-3 mb-4 shadow-sm">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <div class="bg-info bg-opacity-10 text-info p-2 rounded-3 me-3">
+                    <i class="bi bi-chat-dots-fill fs-3"></i>
+                </div>
+                <div>
+                    <h4 class="fw-bold mb-0 text-dark">Módulo de Comunicación</h4>
+                    <small class="text-muted">Avisos, Asistencias, Alertas Inteligentes e Historiales</small>
+                </div>
+            </div>
+            
+            <!-- ACCESOS RÁPIDOS DE COMUNICACIÓN -->
+            <div class="btn-group btn-group-sm" role="group">
+                <a href="{% url 'publicaciontablon_list' %}" class="btn btn-outline-info">
+                    <i class="bi bi-megaphone me-1"></i> Tablón
+                </a>
+                <a href="{% url 'registroasistencia_list' %}" class="btn btn-outline-info">
+                    <i class="bi bi-calendar-check me-1"></i> Asistencias
+                </a>
+                <a href="{% url 'alertariesgoia_list' %}" class="btn btn-outline-info">
+                    <i class="bi bi-shield-exclamation me-1"></i> Alertas IA
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTENIDO ESPECÍFICO DE COMUNICACIÓN -->
+    <div class="container">
+        {% block comunicacion_content %}
+            {% block content_inner %}{% endblock %}
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}

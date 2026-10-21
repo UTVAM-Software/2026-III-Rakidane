@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}Comentarios de Tablón{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-0 text-primary">Comentarios de Tablón</h2>
+            <p class="text-muted mb-0">Interacciones y respuestas en las publicaciones del tablón de anuncios</p>
+        </div>
+        <a href="{% url 'comentariotablon_create' %}" class="btn btn-primary shadow-sm">
+            <i class="bi bi-plus-lg me-1"></i> Nuevo Comentario
+        </a>
+    </div>
+
+    <div class="card border-0 shadow-sm rounded-3">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col" class="ps-4">Publicación</th>
+                            <th scope="col">Usuario / Cuenta</th>
+                            <th scope="col">Mensaje</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col" class="text-end pe-4">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for com in object_list %}
+                        <tr>
+                            <td class="ps-4 fw-semibold text-dark">
+                                <span class="badge bg-light text-dark border">{{ com.id_publicacion.titulo|default:"Publicación" }}</span>
+                            </td>
+                            <td><small class="text-secondary"><i class="bi bi-person me-1"></i>{{ com.id_cuenta }}</small></td>
+                            <td class="text-muted small text-truncate" style="max-width: 250px;">
+                                {{ com.mensaje }}
+                            </td>
+                            <td><small class="text-muted"><i class="bi bi-clock me-1"></i>{{ com.creado_en|date:"d/m/Y H:i" }}</small></td>
+                            <td class="text-end pe-4">
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <a href="{% url 'comentariotablon_detail' com.pk %}" class="btn btn-outline-info" title="Ver detalle">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                    <a href="{% url 'comentariotablon_update' com.pk %}" class="btn btn-outline-warning" title="Editar">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <a href="{% url 'comentariotablon_delete' com.pk %}" class="btn btn-outline-danger" title="Eliminar">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center py-5 text-muted">
+                                <i class="bi bi-chat-left-text display-5 d-block mb-2"></i>
+                                No hay comentarios registrados en el tablón actualmente.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
