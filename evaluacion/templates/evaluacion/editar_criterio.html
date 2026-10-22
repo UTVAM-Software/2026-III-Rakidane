@@ -1,46 +1,23 @@
 {% extends 'base.html' %}
 
-{% block title %}Editar Criterio de Rúbrica{% endblock %}
+{% block title %}Editar Criterio{% endblock %}
 
 {% block content %}
-<div class="container py-4">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <div class="card border-0 shadow-sm rounded-3">
-                <div class="card-header bg-white py-3 border-bottom">
-                    <h4 class="mb-0 fw-bold text-warning"><i class="bi bi-pencil-square me-2"></i>Modificar Criterio de Rúbrica</h4>
-                </div>
-                <div class="card-body p-4">
-                    <form method="post" novalidate>
-                        {% csrf_token %}
-                        {% for field in form %}
-                        <div class="mb-3">
-                            <label for="{{ field.id_for_label }}" class="form-label fw-semibold text-secondary">
-                                {{ field.label }}
-                            </label>
-                            {% if field.field.widget.input_type == 'select' %}
-                                {{ field }}
-                            {% elif field.name == 'descripcion_criterio' %}
-                                <textarea name="{{ field.name }}" id="{{ field.id_for_label }}" rows="4" class="form-control {% if field.errors %}is-invalid{% endif %}">{{ field.value|default:'' }}</textarea>
-                            {% else %}
-                                <input type="{{ field.field.widget.input_type|default:'text' }}" 
-                                       name="{{ field.name }}" 
-                                       id="{{ field.id_for_label }}" 
-                                       value="{{ field.value|default:'' }}"
-                                       class="form-control {% if field.errors %}is-invalid{% endif %}"
-                                       {% if field.field.required %}required{% endif %}>
-                            {% endif %}
-                            {% for error in field.errors %}
-                                <div class="invalid-feedback d-block">{{ error }}</div>
-                            {% endfor %}
-                        </div>
-                        {% endfor %}
-                        <div class="d-flex justify-content-end gap-2 mt-4">
-                            <a href="{% url 'criteriorubrica_list' %}" class="btn btn-light border">Cancelar</a>
-                            <button type="submit" class="btn btn-warning text-dark shadow-sm"><i class="bi bi-arrow-repeat me-1"></i> Actualizar Criterio</button>
-                        </div>
-                    </form>
-                </div>
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-warning text-dark">
+                <h4 class="mb-0">Editar Criterio: {{ object.nombre_criterio }}</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <div class="d-flex justify-content-between mt-4">
+                        <a href="{% url 'criteriorubrica_detail' object.pk %}" class="btn btn-secondary">Cancelar</a>
+                        <button type="submit" class="btn btn-warning">Guardar Cambios</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

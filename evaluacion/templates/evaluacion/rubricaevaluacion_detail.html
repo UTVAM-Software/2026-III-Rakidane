@@ -1,49 +1,28 @@
 {% extends 'base.html' %}
 
-{% block title %}Detalle de la Rúbrica{% endblock %}
+{% block title %}Detalle de Rúbrica{% endblock %}
 
 {% block content %}
-<div class="container py-4">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <div class="card border-0 shadow-sm rounded-3">
-                <div class="card-header bg-primary text-white py-3 rounded-top">
-                    <h4 class="mb-0 fw-bold"><i class="bi bi-card-checklist me-2"></i>{{ object.nombre_rubrica }}</h4>
-                </div>
-                <div class="card-body p-4">
-                    <div class="row g-3">
-                        <div class="col-12">
-                            <label class="form-label text-muted small fw-bold">LECCIÓN / ACTIVIDAD ASOCIADA</label>
-                            <p class="fs-5 text-dark">
-                                <i class="bi bi-journal-text me-2 text-primary"></i>
-                                {% if object.id_leccion %}
-                                    {{ object.id_leccion.titulo }}
-                                {% else %}
-                                    <span class="text-muted fst-italic">Rúbrica general (Sin lección asignada)</span>
-                                {% endif %}
-                            </p>
-                        </div>
-                        <div class="col-12">
-                            <hr class="text-muted opacity-25">
-                            <label class="form-label text-muted small fw-bold">DESCRIPCIÓN GENERAL</label>
-                            <div class="bg-light p-3 rounded text-dark">
-                                {{ object.descripcion_general|default:"No se proporcionó una descripción para esta rúbrica."|linebreaks }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer bg-light py-3 d-flex justify-content-between">
-                    <a href="{% url 'rubricaevaluacion_list' %}" class="btn btn-outline-secondary">
-                        <i class="bi bi-arrow-left me-1"></i> Regresar a la lista
-                    </a>
-                    <div>
-                        <a href="{% url 'rubricaevaluacion_update' object.pk %}" class="btn btn-warning me-2">
-                            <i class="bi bi-pencil me-1"></i> Editar
-                        </a>
-                        <a href="{% url 'rubricaevaluacion_delete' object.pk %}" class="btn btn-danger">
-                            <i class="bi bi-trash me-1"></i> Eliminar
-                        </a>
-                    </div>
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">{{ object.nombre_rubrica }}</h4>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-4">Lección Asociada:</dt>
+                    <dd class="col-sm-8">{{ object.id_leccion|default:"Sin asignar" }}</dd>
+
+                    <dt class="col-sm-4">Descripción General:</dt>
+                    <dd class="col-sm-8">{{ object.descripcion_general|default:"Sin descripción" }}</dd>
+                </dl>
+            </div>
+            <div class="card-footer d-flex justify-content-between">
+                <a href="{% url 'rubricaevaluacion_list' %}" class="btn btn-secondary">Regresar</a>
+                <div>
+                    <a href="{% url 'rubricaevaluacion_update' object.pk %}" class="btn btn-warning">Editar</a>
+                    <a href="{% url 'rubricaevaluacion_delete' object.pk %}" class="btn btn-danger">Eliminar</a>
                 </div>
             </div>
         </div>

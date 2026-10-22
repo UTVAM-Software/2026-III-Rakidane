@@ -1,61 +1,38 @@
+
 {% extends 'base.html' %}
 
-{% block title %}Detalle de la Inscripción{% endblock %}
+{% block title %}Detalle de Inscripción{% endblock %}
 
 {% block content %}
-<div class="container py-4">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <div class="card border-0 shadow-sm rounded-3">
-                <div class="card-header bg-primary text-white py-3 rounded-top">
-                    <h4 class="mb-0 fw-bold"><i class="bi bi-person-vcard me-2"></i>Detalle de Inscripción</h4>
-                </div>
-                <div class="card-body p-4">
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <label class="form-label text-muted small fw-bold">ALUMNO INSCRITO</label>
-                            <p class="fs-5 fw-bold text-dark">{{ object.id_alumno }}</p>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label text-muted small fw-bold">MATERIA / CURSO</label>
-                            <p class="fs-5 text-dark"><i class="bi bi-book me-1 text-primary"></i>{{ object.id_curso.nombre_materia }}</p>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label text-muted small fw-bold">FECHA DE INSCRIPCIÓN</label>
-                            <p class="fs-5 text-dark">{{ object.fecha_inscripcion|date:"d/m/Y H:i" }}</p>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label text-muted small fw-bold">ESTADO DE INSCRIPCIÓN</label>
-                            <p class="fs-5 text-dark">
-                                <span class="badge bg-info text-dark">
-                                    {{ object.id_estado_inscripcion.nombre_estado|default:"En Cursamiento" }}
-                                </span>
-                            </p>
-                        </div>
-                        <div class="col-12">
-                            <hr class="text-muted opacity-25">
-                            <label class="form-label text-muted small fw-bold">PROGRESO DEL ALUMNO</label>
-                            <div class="d-flex align-items-center gap-3 mt-1">
-                                <div class="progress flex-grow-1" style="height: 12px;">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ object.progreso_porcentaje }}%;" aria-valuenow="{{ object.progreso_porcentaje }}" aria-valuemin="0" aria-valuemax="100"></div>
-                                </div>
-                                <span class="fs-5 fw-bold text-success">{{ object.progreso_porcentaje }}%</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer bg-light py-3 d-flex justify-content-between">
-                    <a href="{% url 'inscripcioncurso_list' %}" class="btn btn-outline-secondary">
-                        <i class="bi bi-arrow-left me-1"></i> Regresar a la lista
-                    </a>
-                    <div>
-                        <a href="{% url 'inscripcioncurso_update' object.pk %}" class="btn btn-warning me-2">
-                            <i class="bi bi-pencil me-1"></i> Editar
-                        </a>
-                        <a href="{% url 'inscripcioncurso_delete' object.pk %}" class="btn btn-danger">
-                            <i class="bi bi-trash me-1"></i> Eliminar
-                        </a>
-                    </div>
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0"><i class="bi bi-person-plus me-2"></i>{{ object }}</h4>
+            </div>
+            <div class="card-body">
+                <dl class="row mb-0">
+                    <dt class="col-sm-4">Alumno:</dt>
+                    <dd class="col-sm-8">{{ object.id_alumno }}</dd>
+
+                    <dt class="col-sm-4">Curso:</dt>
+                    <dd class="col-sm-8">{{ object.id_curso }}</dd>
+
+                    <dt class="col-sm-4">Estado:</dt>
+                    <dd class="col-sm-8">{{ object.id_estado_inscripcion|default:"Sin estado" }}</dd>
+
+                    <dt class="col-sm-4">Progreso:</dt>
+                    <dd class="col-sm-8"><div class="progress" role="progressbar" style="height: 20px;"><div class="progress-bar" style="width: {{ object.progreso_porcentaje|floatformat:0 }}%">{{ object.progreso_porcentaje|floatformat:2 }}%</div></div></dd>
+
+                    <dt class="col-sm-4">Fecha de inscripción:</dt>
+                    <dd class="col-sm-8">{{ object.fecha_inscripcion|date:"d/m/Y H:i" }}</dd>
+                </dl>
+            </div>
+            <div class="card-footer d-flex justify-content-between">
+                <a href="{% url 'inscripcioncurso_list' %}" class="btn btn-secondary">Regresar</a>
+                <div>
+                    <a href="{% url 'inscripcioncurso_update' object.pk %}" class="btn btn-warning">Editar</a>
+                    <a href="{% url 'inscripcioncurso_delete' object.pk %}" class="btn btn-danger">Eliminar</a>
                 </div>
             </div>
         </div>
