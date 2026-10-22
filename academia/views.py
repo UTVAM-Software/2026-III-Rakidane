@@ -71,6 +71,7 @@ class EstadoInscripcionUpdateView(BootstrapFormMixin, UpdateView):
     template_name = 'academia/editar_estado_inscripcion.html'
     success_url = reverse_lazy('estadoinscripcion_list')
 
+
 class EstadoInscripcionDeleteView(BorradoSeguroMixin, DeleteView):
     model = EstadoInscripcion
     success_url = reverse_lazy('estadoinscripcion_list')

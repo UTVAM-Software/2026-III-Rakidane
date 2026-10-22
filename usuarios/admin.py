@@ -1,5 +1,14 @@
 from django.contrib import admin
-from .models import RolCuenta, EstadoMatricula, ParentescoTutor, CuentaAcceso, Docente, Alumno, TutorPadre, SupervisionTutor
+from .models import (
+    CuentaAcceso,
+    Alumno,
+    Docente,
+    TutorPadre,
+    EstadoMatricula,
+    RolCuenta,
+    ParentescoTutor,
+    SupervisionTutor,
+)
 
 # --- REGISTRO DE CATÁLOGOS ---
 @admin.register(RolCuenta)

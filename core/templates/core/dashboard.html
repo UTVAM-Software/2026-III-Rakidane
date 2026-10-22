@@ -1,110 +1,310 @@
 {% extends "base.html" %}
 
-{% block title %}Panel Principal - Sistema General{% endblock %}
+{% block title %}Panel Principal - Rakidane{% endblock %}
 
 {% block content %}
+<style>
+    :root {
+        --rak-golden-yellow: #E8A317;
+        --rak-light-blue: #9AC0CD;
+        --rak-royal-blue: #183995;
+        --rak-off-white: #FDFDFD;
+        --rak-warm-grey: #696969;
+        --rak-midnight-blue: #0A1F4D;
+    }
+
+    body {
+        background-color: var(--rak-off-white) !important;
+    }
+
+    .hero-banner {
+        background: linear-gradient(135deg, var(--rak-midnight-blue) 0%, var(--rak-royal-blue) 100%);
+        border: 1px solid rgba(154, 192, 205, 0.2);
+        box-shadow: 0 10px 30px rgba(10, 31, 77, 0.15);
+    }
+
+    .accent-golden {
+        color: var(--rak-golden-yellow) !important;
+    }
+
+    .badge-rakidane {
+        background-color: rgba(232, 163, 23, 0.15);
+        color: var(--rak-golden-yellow);
+        border: 1px solid rgba(232, 163, 23, 0.4);
+    }
+
+    .module-card {
+        border: 1px solid rgba(154, 192, 205, 0.3);
+        border-radius: 1.25rem;
+        background-color: #ffffff;
+        transition: transform 0.25s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .module-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 16px 32px rgba(24, 57, 149, 0.12) !important;
+        border-color: var(--rak-light-blue);
+    }
+
+    .icon-shape-royal {
+        width: 52px;
+        height: 52px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.85rem;
+        background-color: rgba(24, 57, 149, 0.08);
+        color: var(--rak-royal-blue);
+    }
+
+    .icon-shape-golden {
+        width: 52px;
+        height: 52px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.85rem;
+        background-color: rgba(232, 163, 23, 0.12);
+        color: var(--rak-golden-yellow);
+    }
+
+    .icon-shape-midnight {
+        width: 52px;
+        height: 52px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.85rem;
+        background-color: rgba(10, 31, 77, 0.08);
+        color: var(--rak-midnight-blue);
+    }
+
+    .list-group-item-rakidane {
+        transition: all 0.2s ease;
+        border-radius: 0.5rem !important;
+        margin-bottom: 3px;
+        color: var(--rak-warm-grey) !important;
+    }
+
+    .list-group-item-rakidane:hover {
+        background-color: rgba(154, 192, 205, 0.12);
+        color: var(--rak-royal-blue) !important;
+        padding-left: 1.25rem !important;
+    }
+
+    .list-group-item-rakidane i.bi-chevron-right {
+        transition: transform 0.2s ease, color 0.2s ease;
+    }
+
+    .list-group-item-rakidane:hover i.bi-chevron-right {
+        transform: translateX(4px);
+        color: var(--rak-golden-yellow) !important;
+    }
+
+    .text-warm-grey {
+        color: var(--rak-warm-grey);
+    }
+</style>
+
 <div class="container py-4">
-    <div class="d-flex align-items-center mb-4">
-        <div>
-            <h2 class="fw-bold mb-0"><i class="bi bi-grid-fill me-2 text-primary"></i>Panel General de Aplicaciones</h2>
-            <p class="text-muted mb-0">Gestión integral de los módulos de la plataforma</p>
+    <!-- HERO BANNER INSTITUCIONAL -->
+    <div class="p-4 p-md-5 mb-5 rounded-4 text-white hero-banner position-relative overflow-hidden">
+        <div class="row align-items-center position-relative z-1">
+            <div class="col-lg-8">
+                <span class="badge badge-rakidane fw-bold px-3 py-2 rounded-pill mb-3">
+                    <i class="bi bi-shield-check me-1"></i> Plataforma Gestión Rakidane
+                </span>
+                <h1 class="display-5 fw-bold mb-2">Bienvenido al Panel General</h1>
+                <p class="lead mb-0 text-light opacity-90">Administración centralizada de usuarios, estructura académica, evaluaciones e interacción educativa.</p>
+            </div>
+            <div class="col-lg-4 text-center text-lg-end d-none d-lg-block">
+                <div class="d-inline-flex align-items-center justify-content-center p-3 rounded-4" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(154,192,205,0.2);">
+                    <i class="bi bi-grid-3x3-gap-fill display-1 accent-golden"></i>
+                </div>
+            </div>
         </div>
     </div>
 
+    <!-- MÓDULOS DEL SISTEMA -->
     <div class="row g-4">
-        <!-- APP 1: USUARIOS -->
-        <div class="col-md-4">
-            <div class="card h-100 shadow-sm border-0 border-top border-primary border-4">
-                <div class="card-body">
+        
+        <!-- MÓDULO 1: USUARIOS -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm module-card">
+                <div class="card-body p-4 d-flex flex-column">
                     <div class="d-flex align-items-center mb-3">
-                        <div class="bg-primary bg-opacity-10 p-3 rounded me-3 text-primary">
+                        <div class="icon-shape-royal me-3">
                             <i class="bi bi-people-fill fs-3"></i>
                         </div>
-                        <h5 class="card-title mb-0 fw-bold">Módulo Usuarios</h5>
+                        <div>
+                            <h5 class="card-title mb-0 fw-bold" style="color: var(--rak-midnight-blue);">Usuarios</h5>
+                            <span class="badge rounded-pill" style="background-color: rgba(24, 57, 149, 0.1); color: var(--rak-royal-blue);">Cuentas & Roles</span>
+                        </div>
                     </div>
-                    <p class="card-text text-muted small">Gestión de Alumnos, Docentes, Tutores, Cuentas de Acceso y Roles del sistema.</p>
-                    <div class="list-group list-group-flush small">
-                        <a href="{% url 'alumno_list' %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Alumnos <i class="bi bi-chevron-right text-muted"></i></a>
-                        <a href="{% url 'docente_list' %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Docentes <i class="bi bi-chevron-right text-muted"></i></a>
-                        <a href="{% url 'tutorpadre_list' %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Tutores y Padres <i class="bi bi-chevron-right text-muted"></i></a>
-                        <a href="{% url 'rol_list' %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Roles y Permisos <i class="bi bi-chevron-right text-muted"></i></a>
+                    <p class="card-text text-warm-grey small mb-4">Gestión de Alumnos, Docentes, Tutores, Cuentas de Acceso y Roles de la plataforma.</p>
+                    
+                    <div class="list-group list-group-flush border-0 mt-auto small">
+                        <a href="{% url 'alumno_list' %}" class="list-group-item list-group-item-action border-0 px-3 py-2 d-flex justify-content-between align-items-center fw-semibold list-group-item-rakidane">
+                            <span><i class="bi bi-person-badge me-2" style="color: var(--rak-royal-blue);"></i>Alumnos</span>
+                            <i class="bi bi-chevron-right text-muted"></i>
+                        </a>
+                        <a href="{% url 'docente_list' %}" class="list-group-item list-group-item-action border-0 px-3 py-2 d-flex justify-content-between align-items-center fw-semibold list-group-item-rakidane">
+                            <span><i class="bi bi-person-workspace me-2" style="color: var(--rak-royal-blue);"></i>Docentes</span>
+                            <i class="bi bi-chevron-right text-muted"></i>
+                        </a>
+                        <a href="{% url 'tutorpadre_list' %}" class="list-group-item list-group-item-action border-0 px-3 py-2 d-flex justify-content-between align-items-center fw-semibold list-group-item-rakidane">
+                            <span><i class="bi bi-heart me-2" style="color: var(--rak-royal-blue);"></i>Tutores y Padres</span>
+                            <i class="bi bi-chevron-right text-muted"></i>
+                        </a>
+                        <a href="{% url 'cuentaacceso_list' %}" class="list-group-item list-group-item-action border-0 px-3 py-2 d-flex justify-content-between align-items-center fw-semibold list-group-item-rakidane">
+                            <span><i class="bi bi-key me-2" style="color: var(--rak-royal-blue);"></i>Cuentas de Acceso</span>
+                            <i class="bi bi-chevron-right text-muted"></i>
+                        </a>
+                        <a href="{% url 'rol_list' %}" class="list-group-item list-group-item-action border-0 px-3 py-2 d-flex justify-content-between align-items-center fw-semibold list-group-item-rakidane">
+                            <span><i class="bi bi-shield-lock me-2" style="color: var(--rak-royal-blue);"></i>Roles y Permisos</span>
+                            <i class="bi bi-chevron-right text-muted"></i>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- APP 2: INSTITUCIÓN -->
-        <div class="col-md-4">
-            <div class="card h-100 shadow-sm border-0 border-top border-success border-4">
-                <div class="card-body">
+        <!-- MÓDULO 2: INSTITUCIÓN -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm module-card">
+                <div class="card-body p-4 d-flex flex-column">
                     <div class="d-flex align-items-center mb-3">
-                        <div class="bg-success bg-opacity-10 p-3 rounded me-3 text-success">
+                        <div class="icon-shape-midnight me-3">
                             <i class="bi bi-building-fill fs-3"></i>
                         </div>
-                        <h5 class="card-title mb-0 fw-bold">Módulo Institución</h5>
+                        <div>
+                            <h5 class="card-title mb-0 fw-bold" style="color: var(--rak-midnight-blue);">Institución</h5>
+                            <span class="badge rounded-pill" style="background-color: rgba(10, 31, 77, 0.1); color: var(--rak-midnight-blue);">Planteles & Sedes</span>
+                        </div>
                     </div>
-                    <p class="card-text text-muted small">Estructura organizacional, planteles, sedes y parámetros institucionales.</p>
-                    <div class="list-group list-group-flush small">
-                        <a href="/institucion/instituciones/" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Instituciones <i class="bi bi-chevron-right text-muted"></i></a>
-                        <a href="/institucion/sedes/" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Sedes / Planteles <i class="bi bi-chevron-right text-muted"></i></a>
+                    <p class="card-text text-warm-grey small mb-4">Estructura organizacional, planteles, sedes y parámetros institucionales.</p>
+                    
+                    <div class="list-group list-group-flush border-0 mt-auto small">
+                        <a href="/institucion/instituciones/" class="list-group-item list-group-item-action border-0 px-3 py-2 d-flex justify-content-between align-items-center fw-semibold list-group-item-rakidane">
+                            <span><i class="bi bi-bank me-2" style="color: var(--rak-midnight-blue);"></i>Instituciones</span>
+                            <i class="bi bi-chevron-right text-muted"></i>
+                        </a>
+                        <a href="/institucion/sedes/" class="list-group-item list-group-item-action border-0 px-3 py-2 d-flex justify-content-between align-items-center fw-semibold list-group-item-rakidane">
+                            <span><i class="bi bi-geo-alt me-2" style="color: var(--rak-midnight-blue);"></i>Sedes / Planteles</span>
+                            <i class="bi bi-chevron-right text-muted"></i>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- APP 3: ACADEMIA -->
-        <div class="col-md-4">
-            <div class="card h-100 shadow-sm border-0 border-top border-warning border-4">
-                <div class="card-body">
+        <!-- MÓDULO 3: ACADEMIA -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm module-card">
+                <div class="card-body p-4 d-flex flex-column">
                     <div class="d-flex align-items-center mb-3">
-                        <div class="bg-warning bg-opacity-10 p-3 rounded me-3 text-warning">
+                        <div class="icon-shape-golden me-3">
                             <i class="bi bi-journal-bookmark-fill fs-3"></i>
                         </div>
-                        <h5 class="card-title mb-0 fw-bold">Módulo Academia</h5>
+                        <div>
+                            <h5 class="card-title mb-0 fw-bold" style="color: var(--rak-midnight-blue);">Academia</h5>
+                            <span class="badge rounded-pill" style="background-color: rgba(232, 163, 23, 0.15); color: #b87d07;">Planes & Materias</span>
+                        </div>
                     </div>
-                    <p class="card-text text-muted small">Planes de estudio, asignaturas, materias, grupos y períodos escolares.</p>
-                    <div class="list-group list-group-flush small">
-                        <a href="/academia/planes_estudio/" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Planes de Estudio <i class="bi bi-chevron-right text-muted"></i></a>
+                    <p class="card-text text-warm-grey small mb-4">Planes de estudio, asignaturas, materias, grupos y lecciones.</p>
+                    
+                    <div class="list-group list-group-flush border-0 mt-auto small">
+                        <a href="{% url 'programanivel_list' %}" class="list-group-item list-group-item-action border-0 px-3 py-2 d-flex justify-content-between align-items-center fw-semibold list-group-item-rakidane">
+                            <span><i class="bi bi-journal-text me-2 accent-golden"></i>Planes de Estudio</span>
+                            <i class="bi bi-chevron-right text-muted"></i>
+                        </a>
+                        <a href="{% url 'gruposeccion_list' %}" class="list-group-item list-group-item-action border-0 px-3 py-2 d-flex justify-content-between align-items-center fw-semibold list-group-item-rakidane">
+                            <span><i class="bi bi-people me-2 accent-golden"></i>Grupos y Secciones</span>
+                            <i class="bi bi-chevron-right text-muted"></i>
+                        </a>
+                        <a href="{% url 'cursomateria_list' %}" class="list-group-item list-group-item-action border-0 px-3 py-2 d-flex justify-content-between align-items-center fw-semibold list-group-item-rakidane">
+                            <span><i class="bi bi-book me-2 accent-golden"></i>Materias y Cursos</span>
+                            <i class="bi bi-chevron-right text-muted"></i>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- APP 4: EVALUACIÓN -->
-        <div class="col-md-4">
-            <div class="card h-100 shadow-sm border-0 border-top border-danger border-4">
-                <div class="card-body">
+        <!-- MÓDULO 4: EVALUACIÓN -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm module-card">
+                <div class="card-body p-4 d-flex flex-column">
                     <div class="d-flex align-items-center mb-3">
-                        <div class="bg-danger bg-opacity-10 p-3 rounded me-3 text-danger">
+                        <div class="icon-shape-royal me-3">
                             <i class="bi bi-clipboard-data-fill fs-3"></i>
                         </div>
-                        <h5 class="card-title mb-0 fw-bold">Módulo Evaluación</h5>
+                        <div>
+                            <h5 class="card-title mb-0 fw-bold" style="color: var(--rak-midnight-blue);">Evaluación</h5>
+                            <span class="badge rounded-pill" style="background-color: rgba(24, 57, 149, 0.1); color: var(--rak-royal-blue);">Boletas & Rúbricas</span>
+                        </div>
                     </div>
-                    <p class="card-text text-muted small">Calificaciones, exenciones, parciales, récords académicos y evaluaciones.</p>
-                    <div class="list-group list-group-flush small">
-                        <a href="/evaluacion/" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Evaluaciones y Notas <i class="bi bi-chevron-right text-muted"></i></a>
+                    <p class="card-text text-warm-grey small mb-4">Calificaciones, boletas, entregas de tareas, rúbricas y revisiones asistidas.</p>
+                    
+                    <div class="list-group list-group-flush border-0 mt-auto small">
+                        <a href="{% url 'boletacalificacion_list' %}" class="list-group-item list-group-item-action border-0 px-3 py-2 d-flex justify-content-between align-items-center fw-semibold list-group-item-rakidane">
+                            <span><i class="bi bi-card-heading me-2" style="color: var(--rak-royal-blue);"></i>Boletas de Calificación</span>
+                            <i class="bi bi-chevron-right text-muted"></i>
+                        </a>
+                        <a href="{% url 'entregatarea_list' %}" class="list-group-item list-group-item-action border-0 px-3 py-2 d-flex justify-content-between align-items-center fw-semibold list-group-item-rakidane">
+                            <span><i class="bi bi-file-earmark-check me-2" style="color: var(--rak-royal-blue);"></i>Entregas de Tareas</span>
+                            <i class="bi bi-chevron-right text-muted"></i>
+                        </a>
+                        <a href="{% url 'rubricaevaluacion_list' %}" class="list-group-item list-group-item-action border-0 px-3 py-2 d-flex justify-content-between align-items-center fw-semibold list-group-item-rakidane">
+                            <span><i class="bi bi-card-checklist me-2" style="color: var(--rak-royal-blue);"></i>Rúbricas de Evaluación</span>
+                            <i class="bi bi-chevron-right text-muted"></i>
+                        </a>
+                        <a href="{% url 'evaluacioniaborrador_list' %}" class="list-group-item list-group-item-action border-0 px-3 py-2 d-flex justify-content-between align-items-center fw-semibold list-group-item-rakidane">
+                            <span><i class="bi bi-robot me-2" style="color: var(--rak-royal-blue);"></i>Evaluaciones Automatizadas (IA)</span>
+                            <i class="bi bi-chevron-right text-muted"></i>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- APP 5: COMUNICACIÓN -->
-        <div class="col-md-4">
-            <div class="card h-100 shadow-sm border-0 border-top border-info border-4">
-                <div class="card-body">
+        <!-- MÓDULO 5: COMUNICACIÓN -->
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm module-card">
+                <div class="card-body p-4 d-flex flex-column">
                     <div class="d-flex align-items-center mb-3">
-                        <div class="bg-info bg-opacity-10 p-3 rounded me-3 text-info">
+                        <div class="icon-shape-golden me-3">
                             <i class="bi bi-chat-dots-fill fs-3"></i>
                         </div>
-                        <h5 class="card-title mb-0 fw-bold">Módulo Comunicación</h5>
+                        <div>
+                            <h5 class="card-title mb-0 fw-bold" style="color: var(--rak-midnight-blue);">Comunicación</h5>
+                            <span class="badge rounded-pill" style="background-color: rgba(232, 163, 23, 0.15); color: #b87d07;">Tablón & Asistencia</span>
+                        </div>
                     </div>
-                    <p class="card-text text-muted small">Avisos, notificaciones institucionales y mensajería a tutores/alumnos.</p>
-                    <div class="list-group list-group-flush small">
-                        <a href="/comunicacion/" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">Avisos y Boletines <i class="bi bi-chevron-right text-muted"></i></a>
+                    <p class="card-text text-warm-grey small mb-4">Tablón de avisos, control de asistencias, alertas de riesgo e historial de actividad.</p>
+                    
+                    <div class="list-group list-group-flush border-0 mt-auto small">
+                        <a href="{% url 'publicaciontablon_list' %}" class="list-group-item list-group-item-action border-0 px-3 py-2 d-flex justify-content-between align-items-center fw-semibold list-group-item-rakidane">
+                            <span><i class="bi bi-megaphone me-2 accent-golden"></i>Tablón de Anuncios</span>
+                            <i class="bi bi-chevron-right text-muted"></i>
+                        </a>
+                        <a href="{% url 'registroasistencia_list' %}" class="list-group-item list-group-item-action border-0 px-3 py-2 d-flex justify-content-between align-items-center fw-semibold list-group-item-rakidane">
+                            <span><i class="bi bi-calendar-check me-2 accent-golden"></i>Registro de Asistencias</span>
+                            <i class="bi bi-chevron-right text-muted"></i>
+                        </a>
+                        <a href="{% url 'alertariesgoia_list' %}" class="list-group-item list-group-item-action border-0 px-3 py-2 d-flex justify-content-between align-items-center fw-semibold list-group-item-rakidane">
+                            <span><i class="bi bi-shield-exclamation me-2 accent-golden"></i>Alertas de Riesgo IA</span>
+                            <i class="bi bi-chevron-right text-muted"></i>
+                        </a>
+                        <a href="{% url 'sugerenciaiasemanal_list' %}" class="list-group-item list-group-item-action border-0 px-3 py-2 d-flex justify-content-between align-items-center fw-semibold list-group-item-rakidane">
+                            <span><i class="bi bi-lightbulb me-2 accent-golden"></i>Sugerencias Semanales IA</span>
+                            <i class="bi bi-chevron-right text-muted"></i>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 {% endblock %}

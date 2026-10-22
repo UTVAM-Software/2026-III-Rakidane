@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalle de Estado de Validación{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card border-0 shadow-sm rounded-3">
+                <div class="card-header bg-primary text-white py-3 rounded-top">
+                    <h4 class="mb-0 fw-bold">{{ object.nombre_estado }}</h4>
+                </div>
+                <div class="card-body p-4 text-center">
+                    <p class="font-monospace text-muted small">{{ object.id_estado_valid }}</p>
+                </div>
+                <div class="card-footer bg-light py-3 d-flex justify-content-between">
+                    <a href="{% url 'estadovalidacionalerta_list' %}" class="btn btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i> Regresar</a>
+                    <div>
+                        <a href="{% url 'estadovalidacionalerta_update' object.pk %}" class="btn btn-warning me-2"><i class="bi bi-pencil me-1"></i> Editar</a>
+                        <a href="{% url 'estadovalidacionalerta_delete' object.pk %}" class="btn btn-danger"><i class="bi bi-trash me-1"></i> Eliminar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

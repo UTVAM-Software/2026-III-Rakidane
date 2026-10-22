@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalle de la Entrega{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-3">
+                <div class="card-header bg-primary text-white py-3 rounded-top d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0 fw-bold"><i class="bi bi-file-earmark-text me-2"></i>Entrega de Tarea</h4>
+                    <span class="badge bg-light text-primary fs-6 font-monospace">
+                        Nota: {{ object.calificacion_final|default:"Sin calificar" }}
+                    </span>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label text-muted small fw-bold">ALUMNO</label>
+                            <p class="fs-5 fw-bold text-dark"><i class="bi bi-person me-1 text-primary"></i>{{ object.id_alumno }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label text-muted small fw-bold">LECCIÓN / TAREA</label>
+                            <p class="fs-5 text-dark"><i class="bi bi-journal-text me-1 text-primary"></i>{{ object.id_leccion.titulo }}</p>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label text-muted small fw-bold">ESTADO DE ENTREGA</label>
+                            <p><span class="badge bg-info text-dark">{{ object.id_estado_entrega.nombre_estado|default:"Enviado" }}</span></p>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label text-muted small fw-bold">ESTADO DE REVISIÓN</label>
+                            <p><span class="badge bg-secondary">{{ object.id_estado_revision.nombre_estado|default:"Sin Revisar" }}</span></p>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label text-muted small fw-bold">FECHA DE ENVÍO</label>
+                            <p class="text-dark fw-semibold">{{ object.fecha_envio|date:"d/m/Y H:i" }}</p>
+                        </div>
+                        <div class="col-12">
+                            <hr class="text-muted opacity-25">
+                            <label class="form-label text-muted small fw-bold">TEXTO / CONTENIDO ENVIADO</label>
+                            <div class="bg-light p-3 rounded text-dark">
+                                {{ object.texto_contenido|default:"El alumno no adjuntó texto de respuesta."|linebreaks }}
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label text-muted small fw-bold">RETROALIMENTACIÓN DEL DOCENTE</label>
+                            <div class="bg-light p-3 rounded text-dark border-start border-primary border-4">
+                                {{ object.retroalimentacion_docente|default:"Sin retroalimentación agregada."|linebreaks }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-light py-3 d-flex justify-content-between">
+                    <a href="{% url 'entregatarea_list' %}" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left me-1"></i> Regresar
+                    </a>
+                    <div>
+                        <a href="{% url 'entregatarea_update' object.pk %}" class="btn btn-warning me-2">
+                            <i class="bi bi-pencil me-1"></i> Editar / Calificar
+                        </a>
+                        <a href="{% url 'entregatarea_delete' object.pk %}" class="btn btn-danger">
+                            <i class="bi bi-trash me-1"></i> Eliminar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

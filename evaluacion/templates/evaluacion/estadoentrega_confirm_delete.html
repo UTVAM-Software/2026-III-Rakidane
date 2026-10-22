@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Confirmar Eliminación{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card border-danger shadow-sm rounded-3">
+                <div class="card-header bg-danger text-white py-3">
+                    <h5 class="mb-0 fw-bold"><i class="bi bi-exclamation-triangle-fill me-2"></i>Confirmar Eliminación</h5>
+                </div>
+                <div class="card-body p-4 text-center">
+                    <p class="fs-5 text-dark mb-2">¿Deseas eliminar el estado de entrega?</p>
+                    <h4 class="fw-bold text-danger mb-4">"{{ object.nombre_estado }}"</h4>
+                    <form method="post" class="d-flex justify-content-center gap-3 mt-4">
+                        {% csrf_token %}
+                        <a href="{% url 'estadoentrega_list' %}" class="btn btn-light border px-4">Cancelar</a>
+                        <button type="submit" class="btn btn-danger px-4 shadow-sm"><i class="bi bi-trash me-1"></i> Eliminar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
