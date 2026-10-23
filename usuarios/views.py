@@ -3,10 +3,12 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.views.generic.edit import FormView
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, logout
 from django.contrib.auth.models import Group
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
+from django.views.decorators.csrf import csrf_exempt
+from django.views import View
 
 from .models import (
     RolCuenta, EstadoMatricula, ParentescoTutor, CuentaAcceso,
@@ -15,7 +17,15 @@ from .models import (
 from .forms import RegistroPublicoForm
 
 
-# --- REGISTRO PÚBLICO (Accesible sin estar autenticado) ---
+# --- LOGOUT PERSONALIZADO (Evita error 403 CSRF en GET) ---
+class CustomLogoutView(View):
+    @method_decorator(csrf_exempt)
+    def dispatch(self, request, *args, **kwargs):
+        logout(request)
+        return redirect('login')
+
+
+# --- REGISTRO PÚBLICO ---
 class RegistroPublicoView(FormView):
     template_name = 'usuarios/registro.html'
     form_class = RegistroPublicoForm
@@ -167,6 +177,8 @@ class CuentaAccesoCreateView(CreateView):
             nombre_rol_clean = nombre_rol.lower().strip()
 
             mapa_roles = {
+                'superadmin': 'Administrador_Institucion',
+                'super admin': 'Administrador_Institucion',
                 'admin institucion': 'Administrador_Institucion',
                 'administrador institucion': 'Administrador_Institucion',
                 'admin': 'Administrador_Institucion',
@@ -181,10 +193,16 @@ class CuentaAccesoCreateView(CreateView):
                 grupo, _ = Group.objects.get_or_create(name=nombre_grupo)
                 user_obj.groups.add(grupo)
 
-            if nombre_grupo == 'Administrador_Institucion':
+            # Lógica para Superadmin y Staff
+            if 'superadmin' in nombre_rol_clean or 'super admin' in nombre_rol_clean:
                 user_obj.is_staff = True
+                user_obj.is_superuser = True
+            elif nombre_grupo == 'Administrador_Institucion':
+                user_obj.is_staff = True
+                user_obj.is_superuser = False
             else:
                 user_obj.is_staff = False
+                user_obj.is_superuser = False
 
             user_obj.save()
 
@@ -225,6 +243,8 @@ class CuentaAccesoUpdateView(UpdateView):
             nombre_rol_clean = nombre_rol.lower().strip()
 
             mapa_roles = {
+                'superadmin': 'Administrador_Institucion',
+                'super admin': 'Administrador_Institucion',
                 'admin institucion': 'Administrador_Institucion',
                 'administrador institucion': 'Administrador_Institucion',
                 'admin': 'Administrador_Institucion',
@@ -239,10 +259,16 @@ class CuentaAccesoUpdateView(UpdateView):
                 grupo, _ = Group.objects.get_or_create(name=nombre_grupo)
                 user_obj.groups.add(grupo)
 
-            if nombre_grupo == 'Administrador_Institucion':
+            # Lógica para Superadmin y Staff
+            if 'superadmin' in nombre_rol_clean or 'super admin' in nombre_rol_clean:
                 user_obj.is_staff = True
+                user_obj.is_superuser = True
+            elif nombre_grupo == 'Administrador_Institucion':
+                user_obj.is_staff = True
+                user_obj.is_superuser = False
             else:
                 user_obj.is_staff = False
+                user_obj.is_superuser = False
 
             user_obj.save()
 
@@ -253,6 +279,21 @@ class CuentaAccesoDeleteView(DeleteView):
     
     def get_success_url(self):
         return f'/usuarios/cuentas/?t={int(time.time())}'
+
+    def form_valid(self, form):
+        cuenta = self.get_object()
+        # Buscar y eliminar el usuario de auth_user asociado antes de eliminar la cuenta
+        User = get_user_model()
+        email_clean = cuenta.email.strip().lower()
+        
+        user_obj = getattr(cuenta, 'usuario', None) or \
+                   User.objects.filter(email__iexact=email_clean).first() or \
+                   User.objects.filter(username__iexact=email_clean).first()
+        
+        if user_obj:
+            user_obj.delete()
+
+        return super().form_valid(form)
 
 
 # --- DOCENTE ---
