@@ -134,6 +134,6 @@ MAILERS = {
 }
 
 # Configuración de URLs de redirección de autenticación
-LOGIN_URL = '/usuarios/login/'
-LOGIN_REDIRECT_URL = '/usuarios/alumnos/'
-LOGOUT_REDIRECT_URL = '/usuarios/login/'
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'dashboard'  # o 'alumno_list' si prefieres que entren directo a alumnos
+LOGOUT_REDIRECT_URL = 'login'

@@ -1,9 +1,35 @@
-from django.shortcuts import render
+import time
+from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic.edit import FormView
+from django.contrib.auth import get_user_model
+from django.contrib.auth.models import Group
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import never_cache
+
 from .models import (
     RolCuenta, EstadoMatricula, ParentescoTutor, CuentaAcceso,
     Docente, Alumno, TutorPadre, SupervisionTutor
 )
+from .forms import RegistroPublicoForm
+
+
+# --- REGISTRO PÚBLICO (Accesible sin estar autenticado) ---
+class RegistroPublicoView(FormView):
+    template_name = 'usuarios/registro.html'
+    form_class = RegistroPublicoForm
+    success_url = reverse_lazy('login')
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('alumno_list')
+        return super().dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+
 
 # --- ROL CUENTA ---
 class RolCuentaListView(ListView):
@@ -89,32 +115,144 @@ class ParentescoTutorDeleteView(DeleteView):
 
 
 # --- CUENTA ACCESO ---
+@method_decorator(never_cache, name='dispatch')
 class CuentaAccesoListView(ListView):
     model = CuentaAcceso
     template_name = 'usuarios/Cuenta_acceso/cuentaacceso_list.html'
     context_object_name = 'cuentas'
+
+    def get_queryset(self):
+        return CuentaAcceso.objects.select_related('id_rol').all().order_by('-id_cuenta')
+
 
 class CuentaAccesoDetailView(DetailView):
     model = CuentaAcceso
     template_name = 'usuarios/Cuenta_acceso/cuentaacceso_detail.html'
     context_object_name = 'cuenta'
 
+
+@method_decorator(never_cache, name='dispatch')
 class CuentaAccesoCreateView(CreateView):
     model = CuentaAcceso
     fields = ['email', 'id_rol', 'proveedor_sso', 'esta_activo']
     template_name = 'usuarios/Cuenta_acceso/nuevo_cuentaacceso.html'
-    success_url = '/usuarios/cuentas/'
 
+    def get_success_url(self):
+        return f'/usuarios/cuentas/?t={int(time.time())}'
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        cuenta = form.instance
+        self._sincronizar_estado_y_rol(cuenta)
+        return response
+
+    def _sincronizar_estado_y_rol(self, cuenta):
+        User = get_user_model()
+        email_clean = cuenta.email.strip().lower()
+
+        user_obj = getattr(cuenta, 'usuario', None)
+        if not user_obj:
+            user_obj = User.objects.filter(email__iexact=email_clean).first() or \
+                       User.objects.filter(username__iexact=email_clean).first()
+
+        if user_obj:
+            user_obj.is_active = cuenta.esta_activo
+            
+            nombre_rol = ""
+            if hasattr(cuenta.id_rol, 'nombre_rol'):
+                nombre_rol = cuenta.id_rol.nombre_rol
+            elif cuenta.id_rol:
+                nombre_rol = str(cuenta.id_rol)
+
+            nombre_rol_clean = nombre_rol.lower().strip()
+
+            mapa_roles = {
+                'admin institucion': 'Administrador_Institucion',
+                'administrador institucion': 'Administrador_Institucion',
+                'admin': 'Administrador_Institucion',
+                'docente': 'Docente',
+                'tutor': 'Tutor',
+            }
+
+            nombre_grupo = mapa_roles.get(nombre_rol_clean)
+            user_obj.groups.clear()
+            
+            if nombre_grupo:
+                grupo, _ = Group.objects.get_or_create(name=nombre_grupo)
+                user_obj.groups.add(grupo)
+
+            if nombre_grupo == 'Administrador_Institucion':
+                user_obj.is_staff = True
+            else:
+                user_obj.is_staff = False
+
+            user_obj.save()
+
+
+@method_decorator(never_cache, name='dispatch')
 class CuentaAccesoUpdateView(UpdateView):
     model = CuentaAcceso
     fields = ['email', 'id_rol', 'proveedor_sso', 'esta_activo']
     template_name = 'usuarios/Cuenta_acceso/editar_cuentaacceso.html'
-    success_url = '/usuarios/cuentas/'
+
+    def get_success_url(self):
+        return f'/usuarios/cuentas/?t={int(time.time())}'
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        cuenta = form.instance
+        self._sincronizar_estado_y_rol(cuenta)
+        return response
+
+    def _sincronizar_estado_y_rol(self, cuenta):
+        User = get_user_model()
+        email_clean = cuenta.email.strip().lower()
+
+        user_obj = getattr(cuenta, 'usuario', None)
+        if not user_obj:
+            user_obj = User.objects.filter(email__iexact=email_clean).first() or \
+                       User.objects.filter(username__iexact=email_clean).first()
+
+        if user_obj:
+            user_obj.is_active = cuenta.esta_activo
+            
+            nombre_rol = ""
+            if hasattr(cuenta.id_rol, 'nombre_rol'):
+                nombre_rol = cuenta.id_rol.nombre_rol
+            elif cuenta.id_rol:
+                nombre_rol = str(cuenta.id_rol)
+
+            nombre_rol_clean = nombre_rol.lower().strip()
+
+            mapa_roles = {
+                'admin institucion': 'Administrador_Institucion',
+                'administrador institucion': 'Administrador_Institucion',
+                'admin': 'Administrador_Institucion',
+                'docente': 'Docente',
+                'tutor': 'Tutor',
+            }
+
+            nombre_grupo = mapa_roles.get(nombre_rol_clean)
+            user_obj.groups.clear()
+            
+            if nombre_grupo:
+                grupo, _ = Group.objects.get_or_create(name=nombre_grupo)
+                user_obj.groups.add(grupo)
+
+            if nombre_grupo == 'Administrador_Institucion':
+                user_obj.is_staff = True
+            else:
+                user_obj.is_staff = False
+
+            user_obj.save()
+
 
 class CuentaAccesoDeleteView(DeleteView):
     model = CuentaAcceso
     template_name = 'usuarios/Cuenta_acceso/cuentaacceso_confirm_delete.html'
-    success_url = '/usuarios/cuentas/'
+    
+    def get_success_url(self):
+        return f'/usuarios/cuentas/?t={int(time.time())}'
 
 
 # --- DOCENTE ---

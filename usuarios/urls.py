@@ -1,6 +1,9 @@
 from django.urls import path
+from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import permission_required, login_required
 from .views import (
+    # Registro Público
+    RegistroPublicoView,
     # RolCuenta
     RolCuentaListView, RolCuentaDetailView, RolCuentaCreateView, RolCuentaUpdateView, RolCuentaDeleteView,
     # EstadoMatricula
@@ -20,6 +23,13 @@ from .views import (
 )
 
 urlpatterns = [
+    # --- REGISTRO PÚBLICO (Sin login_required) ---
+    path('registro/', RegistroPublicoView.as_view(), name='registro_publico'),
+
+    # --- AUTENTICACIÓN (LOGIN / LOGOUT) ---
+    path('login/', auth_views.LoginView.as_view(template_name='usuarios/login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+
     # --- ALUMNO ---
     path('alumnos/', login_required(AlumnoListView.as_view()), name='alumno_list'),
     path('alumnos/create/', permission_required('usuarios.add_alumno')(AlumnoCreateView.as_view()), name='alumno_create'),
