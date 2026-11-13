@@ -1,25 +1,27 @@
 from django.urls import path
+from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import permission_required, login_required
 from .views import (
-    # RolCuenta
+    RegistroPublicoView,
+    CustomLogoutView,
     RolCuentaListView, RolCuentaDetailView, RolCuentaCreateView, RolCuentaUpdateView, RolCuentaDeleteView,
-    # EstadoMatricula
     EstadoMatriculaListView, EstadoMatriculaDetailView, EstadoMatriculaCreateView, EstadoMatriculaUpdateView, EstadoMatriculaDeleteView,
-    # ParentescoTutor
     ParentescoTutorListView, ParentescoTutorDetailView, ParentescoTutorCreateView, ParentescoTutorUpdateView, ParentescoTutorDeleteView,
-    # CuentaAcceso
     CuentaAccesoListView, CuentaAccesoDetailView, CuentaAccesoCreateView, CuentaAccesoUpdateView, CuentaAccesoDeleteView,
-    # Docente
     DocenteListView, DocenteDetailView, DocenteCreateView, DocenteUpdateView, DocenteDeleteView,
-    # Alumno
     AlumnoListView, AlumnoDetailView, AlumnoCreateView, AlumnoUpdateView, AlumnoDeleteView,
-    # TutorPadre
     TutorPadreListView, TutorPadreDetailView, TutorPadreCreateView, TutorPadreUpdateView, TutorPadreDeleteView,
-    # SupervisionTutor
     SupervisionTutorListView, SupervisionTutorDetailView, SupervisionTutorCreateView, SupervisionTutorUpdateView, SupervisionTutorDeleteView,
 )
 
 urlpatterns = [
+    # --- REGISTRO PÚBLICO ---
+    path('registro/', RegistroPublicoView.as_view(), name='registro_publico'),
+
+    # --- AUTENTICACIÓN (LOGIN / LOGOUT) ---
+    path('login/', auth_views.LoginView.as_view(template_name='usuarios/login.html'), name='login'),
+    path('logout/', CustomLogoutView.as_view(), name='logout'),
+
     # --- ALUMNO ---
     path('alumnos/', login_required(AlumnoListView.as_view()), name='alumno_list'),
     path('alumnos/create/', permission_required('usuarios.add_alumno')(AlumnoCreateView.as_view()), name='alumno_create'),
